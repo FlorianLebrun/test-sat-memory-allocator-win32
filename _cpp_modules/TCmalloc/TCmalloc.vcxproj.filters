@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="gperftools\src\central_freelist.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\common.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\fake_stacktrace_scope.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\heap-profile-table.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\internal_logging.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\malloc_extension.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\malloc_hook.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\page_heap.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\raw_printer.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\sampler.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\span.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\stack_trace_table.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\stacktrace.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\static_vars.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\symbolize.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\thread_cache.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\base\dynamic_annotations.c">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\base\low_level_alloc.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\base\spinlock.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\base\spinlock_internal.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\base\sysinfo.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\windows\ia32_modrm_map.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\windows\ia32_opcode_map.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\windows\mini_disassembler.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\windows\preamble_patcher.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\windows\preamble_patcher_with_stub.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\base\logging.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\memory_region_map.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\windows\port.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\windows\system-alloc.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gperftools\src\windows\patch_functions.cc">
+      <Filter>Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gperftools\src\central_freelist.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\common.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\emergency_malloc.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\internal_logging.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\memory_region_map.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\page_heap.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\page_heap_allocator.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\pagemap.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\sampler.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\span.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\stack_trace_table.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\static_vars.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\symbolize.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\tcmalloc.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\tcmalloc_guard.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="gperftools\src\thread_cache.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
