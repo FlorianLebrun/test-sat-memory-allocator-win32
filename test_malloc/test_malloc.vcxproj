@@ -4,25 +4,25 @@
     <Import Project="$(SolutionDir)projects.props" />
   </ImportGroup>
   <ItemGroup>
-    <ProjectReference Include="..\_cpp_modules\binary-arithmetic\_project\binary-arithmetic.vcxproj">
+    <ProjectReference Include="$(CppModulesDir)binary-arithmetic\_project\binary-arithmetic.vcxproj">
       <Project>{15e62e08-d332-4d14-9091-918f9332422e}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\_cpp_modules\normalized\_project\normalized.vcxproj">
+    <ProjectReference Include="$(CppModulesDir)normalized\_project\normalized.vcxproj">
       <Project>{cb0a05ae-360b-466b-8601-5251118522d8}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\_project\sat-memory-allocator-win32.vcxproj">
+    <ProjectReference Include="$(CppModulesDir)sat-memory-allocator-win32\_project\sat-memory-allocator-win32.vcxproj">
       <Project>{49222E20-EE19-4C77-9198-5872DC04027D}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\_cpp_modules\sat-memory-inspector\_project\sat-memory-inspector.vcxproj">
+    <ProjectReference Include="$(CppModulesDir)sat-memory-inspector\_project\sat-memory-inspector.vcxproj">
       <Project>{DC7C6764-8B8B-46DA-A8B5-2C8A70C5AC28}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\_cpp_modules\TCmalloc\_project\TCmalloc.vcxproj">
+    <ProjectReference Include="$(CppModulesDir)TCmalloc\_project\TCmalloc.vcxproj">
       <Project>{2a5e3013-4558-4856-9331-c88739dedd7f}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\_cpp_modules\json-soft-document\_project\json-soft-document.vcxproj">
+    <ProjectReference Include="$(CppModulesDir)json-soft-document\_project\json-soft-document.vcxproj">
       <Project>{2731AB96-EECB-41A0-9EA4-E27A3C9B205D}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\_cpp_modules\uv\_project\uv.vcxproj">
+    <ProjectReference Include="$(CppModulesDir)uv\_project\uv.vcxproj">
       <Project>{C228FB51-5748-47FE-A0EA-F8F91FDC1442}</Project>
     </ProjectReference>
   </ItemGroup>

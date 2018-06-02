@@ -1,5 +1,4 @@
 #include <sat-memory-allocator-win32>
-#include <sat-memory-inspector>
 
 #include <vector>
 #include <assert.h>
@@ -129,16 +128,17 @@ struct tTest {
   {
     {
       SAT::ITypesController* types = sat_get_types_controller();
-      SAT::TypeDef def_uint32_t = types->createBufferType("uint32_t", SAT::ENC_INT, sizeof(uint32_t));
-      SAT::TypeDef def_myClass1 = types->createClassType("myClass1", sizeof(myClass1), 2, 0);
-      SAT::TypeDef def_myClass2 = types->createClassType("myClass2", sizeof(myClass2), 0, 1);
+      SAT::TypeDef def_uint32_t = types->createBufferType("uint32_t", 0, SAT::ENC_INT, sizeof(uint32_t));
+      SAT::TypeDef def_myClass1 = types->createClassType("myClass1", 0, sizeof(myClass1), 2, 0);
+      SAT::TypeDef def_myClass2 = types->createClassType("myClass2", 0, sizeof(myClass2), 0, 1);
 
-      def_myClass1->setRef(0, &SAT::tTypeDef::zero<myClass1>().x, def_myClass2);
-      def_myClass1->setRef(1, &SAT::tTypeDef::zero<myClass1>().y, def_myClass2);
-      myClass1::typeID = def_myClass1->getID();
+      myClass1::typeID = types->getTypeID(def_myClass1);
+      myClass2::typeID = types->getTypeID(def_myClass2);
 
-      def_myClass2->setBuffer(0, &SAT::tTypeDef::zero<myClass2>().x, def_uint32_t);
-      myClass2::typeID = def_myClass2->getID();
+      def_myClass1->setRef(0, &SAT::tTypeDef::zero<myClass1>().x, myClass2::typeID);
+      def_myClass1->setRef(1, &SAT::tTypeDef::zero<myClass1>().y, myClass2::typeID);
+
+      def_myClass2->setBuffer(0, &SAT::tTypeDef::zero<myClass2>().x, types->getTypeID(def_uint32_t));
     }
 
     Chrono c;
@@ -162,8 +162,9 @@ struct tTest {
     printf("[SAT-malloc] free object time = %g ns\n", c.GetDiffFloat(Chrono::NS) / float(count));
 
     struct Visitor : SAT::IObjectVisitor {
-      virtual void visit(SAT::tpObjectInfos obj) override {
+      virtual bool visit(SAT::tpObjectInfos obj) override {
         printf("%.8X\n", obj->base);
+        return true;
       }
     };
     sat_get_contoller()->traverseObjects(&Visitor());
@@ -210,7 +211,7 @@ struct tTest {
     sampler->unwatchThread(GetCurrentThreadId());
     sampler->pause();
 
-    SAT::StackHistogram* hist = sampler->computeCallStackHistogram();
+    //SAT::StackHistogram* hist = sampler->computeCallStackHistogram();
     //hist->print();
   }
 };
@@ -221,7 +222,6 @@ void main() {
   ::_tcmalloc();
   _satmalloc_init();
 
-  create_tcp_server(9955);
   //test_types();
   //test_alloc_perf();
   test.test_alloc();
