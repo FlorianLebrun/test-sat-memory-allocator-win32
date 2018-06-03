@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { ProfileView, ScalarLink } from "../ProfileView"
+import { ProfileView, ProfileViewLink } from "./ProfileView"
 import { HtmlGrabReaction } from "./charts/event.utils"
 
 type PropsType = {
@@ -8,7 +8,7 @@ type PropsType = {
   children: any,
 }
 
-class ViewSelector extends Component<void, PropsType, Object> {
+class ProfileViewSelector extends Component<void, PropsType, Object> {
   props: Object
   state = {
     min: 0,
@@ -18,7 +18,7 @@ class ViewSelector extends Component<void, PropsType, Object> {
 
   componentWillMount() {
     const { selection } = this.props
-    this.viewClient = new ScalarLink(selection, this.updateRange)
+    this.viewClient = new ProfileViewLink(selection, this.updateRange)
     this.viewClient.update = this.updateRange
   }
   componentWillUnmount() {
@@ -94,4 +94,4 @@ class ViewSelector extends Component<void, PropsType, Object> {
   }
 }
 
-export default ViewSelector
+export default ProfileViewSelector

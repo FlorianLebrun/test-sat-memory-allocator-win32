@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import GraphicLayout2D from "./charts/GraphicLayout2D"
-import { HtmlGrabReaction } from "./charts/event.utils"
+import GraphicLayout2D from "../charts/GraphicLayout2D"
+import { HtmlGrabReaction } from "../charts/event.utils"
 import { ProfileView, ProfileViewClient } from '../ProfileView'
-import { ScalarGridGrapher } from './charts/chart-scalarGrid'
-import chartStyles from "./charts/chart-styles"
+import { ScalarGridGrapher } from '../charts/chart-scalarGrid'
+import chartStyles from "../charts/chart-styles"
 
 class SamplesGrapher {
   client: ProfileViewClient

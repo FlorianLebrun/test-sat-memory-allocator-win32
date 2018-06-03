@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import Application, { Addons } from "react-application-frame"
+import "./index.css"
 
 import "bootstrap/dist/css/bootstrap.min.css"
 window.jQuery = require("jquery/dist/jquery.min.js")

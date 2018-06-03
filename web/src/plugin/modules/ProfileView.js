@@ -1,7 +1,7 @@
 
 const minStrideWidth = 80
 
-export class ScalarLink {
+export class ProfileViewLink {
   view: ProfileView
 
   constructor(view: ProfileView) {
@@ -14,15 +14,27 @@ export class ScalarLink {
     view.map(this)
   }
   unmap() {
-    this.view.map(this)
+    this.view.unmap(this)
     this.view = null
   }
   update() {
-    console.log("ScalarLink update")
+    console.log("ProfileViewLink update")
   }
 }
 
-export class ProfileViewClient extends ScalarLink {
+export class ProfileViewListener extends ProfileViewLink {
+  callback: Function
+  constructor(view: ProfileView, callback: Function) {
+    super(view)
+    this.callback = callback
+  }
+  update() {
+    const { callback } = this
+    callback && callback(this)
+  }
+}
+
+export class ProfileViewClient extends ProfileViewLink {
   step: number
   precision: number
   format: Function

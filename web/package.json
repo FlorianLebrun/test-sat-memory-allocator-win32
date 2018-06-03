@@ -105,7 +105,8 @@
         "module-resolver",
         {
           "alias": {
-            "@application": "react-application-frame"
+            "@application": "react-application-frame",
+            "@modules": "./src/modules"
           }
         }
       ]

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import GraphicLayout2D from "./GraphicLayout2D"
 import { HtmlGrabReaction } from "./event.utils"
-import { ProfileView, ProfileViewClient } from '../../ProfileView'
+import { ProfileView, ProfileViewClient } from '../ProfileView'
 import { ScalarGridGrapher } from './chart-scalarGrid'
 import chartStyles from "./chart-styles"
 

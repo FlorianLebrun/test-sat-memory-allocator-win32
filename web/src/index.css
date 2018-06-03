@@ -1,0 +1,25 @@
+
+
+.text-shade {color:#aaa;}
+.text-red {color:red;}
+.text-blue {color:blue;}
+.text-green {color:green;}
+.text-orange {color:orange;}
+.text-yellow {color:yellow;}
+.text-purple {color:purple;}
+.text-magenta {color:magenta;}
+.text-aqua {color:aqua;}
+.text-grey {color:grey;}
+.text-black {color:black;}
+.text-white {color:white;}
+
+.text-xs {font-size: 9px;}
+.text-sm {font-size: 11px;}
+
+.text-vcenter {vertical-align: middle;}
+
+.font-italic {font-style: italic;}
+.font-bold {font-weight: bold;}
+
+.font-style-italic {font-style: italic;}
+.font-style-bold {font-weight: bold;}

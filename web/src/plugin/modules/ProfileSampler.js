@@ -8,20 +8,14 @@ type RangeType = {
 }
 
 class SamplesBlock {
-  block_next: SamplesBlock
-  block_back: SamplesBlock
   loading: integer = 0
   index: integer
   level: integer
   samples: Object
 
-  constructor(index: integer, level: integer, block_back: SamplesBlock, block_next: SamplesBlock) {
+  constructor(index: integer, level: integer) {
     this.index = index
     this.level = level
-    this.block_back = block_back
-    if (block_back) block_back.block_next = this
-    this.block_next = block_next
-    if (block_next) block_next.block_back = this
   }
   load(data) {
     this.samples = data.samples
@@ -49,6 +43,7 @@ class ProfileSampler {
   inspector: SamplesLoader
   view: ProfileView
   loading: Promise
+  statistics: Object
 
   blockLength: integer
   blockLevels: Array<Array<SamplesBlock>>
@@ -73,33 +68,21 @@ class ProfileSampler {
     else this.loading = Promise.all([this.loading, promise])
     return this.loading
   }
-  getBlockAt(index: integer, level: integer): SamplesBlock {
-    let curBlock, prevBlock = this.blockLevels[level]
-    for (curBlock = prevBlock; curBlock && curBlock.index < index; curBlock = curBlock.block_next) {
-      prevBlock = curBlock
-    }
-    if (curBlock) {
-      if (curBlock.index !== index) {
-        curBlock = new SamplesBlock(index, level, prevBlock, curBlock)
-        if (!prevBlock) this.blockLevels[level] = curBlock
-      }
-    }
-    else {
-      curBlock = new SamplesBlock(index, level, prevBlock, curBlock)
-      if (!prevBlock) this.blockLevels[level] = curBlock
-    }
-    return curBlock
-  }
   getBlockSpan(indexMin: integer, indexMax: integer, level: integer): Array<SamplesBlock> {
     const blocks = []
     let blockLoading = null
     let hasLoading = false
 
-    let curBlock, prevBlock
-    curBlock = this.getBlockAt(indexMin, level)
-    for (let index = curBlock.index; index < indexMax; index++) {
-      if (!curBlock || curBlock.index !== index) {
-        curBlock = new SamplesBlock(index, level, prevBlock, curBlock)
+    let blocksList = this.blockLevels[level]
+    if (!blocksList) {
+      this.blockLevels[level] = blocksList = new Array(0)
+    }
+
+    for (let index = indexMin; index <= indexMax; index++) {
+      let curBlock = blocksList[index]
+      if (!curBlock) {
+        curBlock = new SamplesBlock(index, level)
+        blocksList[index] = curBlock
       }
       if (curBlock.loading === 0) {
         curBlock.loading = -1
@@ -110,8 +93,6 @@ class ProfileSampler {
         hasLoading = true
       }
       blocks.push(curBlock)
-      prevBlock = curBlock
-      curBlock = curBlock.block_next
     }
 
     if (blockLoading) {
@@ -129,6 +110,9 @@ class ProfileSampler {
       }
     }).then((res: Array<Object>) => {
       const data = res.json
+      if (data.stats) {
+        this.statistics = data.stats
+      }
       if (!this.view) {
         this.view = new ProfileView(data.timeStart, data.timeEnd)
       }
