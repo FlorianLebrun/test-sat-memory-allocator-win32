@@ -7,6 +7,10 @@ x64
 *.opensdf
 *.vcxproj.user
 
+# Node.js / npm
+node_modules*
+npm-debug.log*
+
 # Prerequisites
 *.d
 

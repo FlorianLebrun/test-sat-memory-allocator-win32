@@ -41,6 +41,8 @@ app.use("/inspector", function (req, res, next) {
 
 app.use("/inspector", webxEngine.dispatch)
 
+app.use("/", express.static("../web/build"))
+
 const server = app.listen(42000, function () {
   webxEngine.connect(testConfig, () => {
     const port = server.address().port

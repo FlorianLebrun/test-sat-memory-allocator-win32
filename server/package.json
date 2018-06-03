@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "node-webengine-hosting": "./deps/node-webengine-hosting-0.0.7.tgz",
+    "node-webengine-hosting": "../_cpp_modules/node-webengine-hosting",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "nodemon": "^1.17.3"
@@ -76,7 +76,8 @@
     }
   },
   "scripts": {
-    "start": "set PORT=1418 && nodemon --watch src --exec npm run debug",
-    "debug": "babel src -d dist --source-maps && babel-node src/index --source-maps"
+    "start": "set PORT=1418 && node dist/index",
+    "debug": "babel src -d dist --source-maps && babel-node src/index --source-maps",
+    "build": "babel src -d dist --source-maps"
   }
 }
