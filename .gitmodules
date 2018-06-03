@@ -1,9 +1,9 @@
-[submodule "_cpp_modules\\json-soft-document"]
-	path = _cpp_modules\\json-soft-document
+[submodule "_cpp_modules/json-soft-document"]
+	path = _cpp_modules/json-soft-document
 	url = https://github.com/FlorianLebrun/json-soft-document
-[submodule "_cpp_modules\\node-webengine-hosting"]
-	path = _cpp_modules\\node-webengine-hosting
+[submodule "_cpp_modules/node-webengine-hosting"]
+	path = _cpp_modules/node-webengine-hosting
 	url = https://github.com/FlorianLebrun/node-webengine-hosting
-[submodule "_cpp_modules\\sat-memory-allocator-win32"]
-	path = _cpp_modules\\sat-memory-allocator-win32
+[submodule "_cpp_modules/sat-memory-allocator-win32"]
+	path = _cpp_modules/sat-memory-allocator-win32
 	url = https://github.com/FlorianLebrun/sat-memory-allocator-win32
