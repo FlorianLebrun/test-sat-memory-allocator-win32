@@ -1,0 +1,18 @@
+
+# Node.js / npm
+node_modules*
+npm-debug.log*
+
+# tests results
+**/__tests__/_output*
+
+# react-intl messages
+intl/messages.json
+
+/.vs
+/dist
+/build
+/Dll
+/src/test
+.output
+package-lock.json

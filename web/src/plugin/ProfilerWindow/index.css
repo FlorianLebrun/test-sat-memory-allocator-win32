@@ -1,0 +1,16 @@
+
+.RDgm_ground {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  position: relative;
+  font-family: "Consolas";
+  font-size: 16px;
+  background-attachment: local;
+  background-size: 40px 40px;
+  background-color: #dde;
+  background-image: /*grid*/
+  linear-gradient(to right, #eef 1px, transparent 1px), /*vertical*/
+  linear-gradient(to bottom, #eef 1px, transparent 1px)/*horizontal*/
+  ;
+}
