@@ -1,54 +1,68 @@
 import Path from "path"
 import express from "express"
-import { WebxEngine, WebsocketResponse } from "node-webengine-hosting"
+import { CreateWebxEngine, WebxEngine, WebxSession, WebsocketResponse } from "node-webengine-hosting"
+import { fs } from "node-webengine-hosting/dist/common";
 
-const testConfig = {
-  cd: Path.join(process.cwd(), "../x64/Debug"),
+let appDir
+
+appDir = Path.join(process.cwd(), "../x64/Release")
+if (!fs.existsSync(Path.join(appDir, "./test_dll.dll"))) {
+  appDir = Path.join(process.cwd(), "../x64/Debug")
+}
+
+const config = {
+  cd: process.cwd(),
   dll: {
     // Description of library with 'connect' function
-    path: "./test_dll.dll",
+    path: Path.join(appDir, "./test_dll.dll"),
     entryName: "test_sat_connect",
   },
   envs: {
     // Environment variables
-    // "key":"value"
+    "PATH": `${appDir};${process.env["PATH"]}`,
   },
   config: {
     // JSON configuration provided to 'connect' function
   }
 }
 
-const app = express()
-const webxEngine = new WebxEngine()
+function openServer(session: WebxSession) {
+  const app = express()
 
-process.on('exit', (code) => {
-  webxEngine.handleEvent("exit")
-})
-
-app.use("/inspector", function (req, res, next) {
-  if (req.upgrade) {
-    console.log(">> mount-ide websocket")
-    const ws = res.accept()
-    const listener = function (type, data) {
-      this.send(JSON.stringify({ type, data }))
-    }.bind(ws)
-    webxEngine.addEventListener(listener)
-    ws.on("close", () => webxEngine.removeEventListener(listener))
-    ws.send(JSON.stringify({ type: "start", data: {} }))
-  }
-  else next()
-})
-
-app.use("/inspector", webxEngine.dispatch)
-
-app.use("/", express.static("../web/build"))
-
-const server = app.listen(42000, function () {
-  webxEngine.connect(testConfig, () => {
-    const port = server.address().port
-    console.log(`[connected: ${webxEngine.getName()}]`)
-    console.log("Process " + process.pid + " is listening on " + port)
+  console.log("openServer")
+  app.use("/inspector", function (req, res, next) {
+    console.log(req.url)
+    if (req.upgrade) {
+      console.log(">> mount-ide websocket")
+      const ws = res.accept()
+      const listener = function (type, data) {
+        this.send(JSON.stringify({ type, data }))
+      }.bind(ws)
+      session.addEventListener(listener)
+      ws.on("close", () => session.removeEventListener(listener))
+      ws.send(JSON.stringify({ type: "start", data: {} }))
+    }
+    else {
+      session.dispatch(req, res, next)
+    }
   })
-}).on("upgrade", function (req, socket, head) {
-  app.handle(req, WebsocketResponse(req, socket, head))
+
+  app.use("/", express.static("../web/build"))
+
+  const server = app.listen(42000, function () {
+    const port = server.address().port
+    console.log("Process " + process.pid + " is listening on " + port)
+  }).on("upgrade", function (req, socket, head) {
+    app.handle(req, WebsocketResponse(req, socket, head))
+  })
+}
+
+CreateWebxEngine(config, (engine: WebxEngine) => {
+  process.on('exit', (code) => {
+    engine.handleEvent("exit")
+  })
+  engine.createMainSession(config, (session: WebxSession) => {
+    openServer(session)
+  })
 })
+

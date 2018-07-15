@@ -53,7 +53,7 @@ struct AllocTest {
 
         intptr_t& buf = buffers[buffersCount];
         buf = this->AllocBuffer(size);
-        //memset((void*)buf, 0, size);
+        memset((void*)buf, 0, size);
         if (buf) buffersCount++;
         else printf("not enough memory\n");
 

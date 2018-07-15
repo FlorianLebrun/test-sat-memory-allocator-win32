@@ -147,7 +147,6 @@ void* TCMalloc_SystemAlloc(size_t size, size_t *actual_size,
 
 extern PERFTOOLS_DLL_DECL
 bool TCMalloc_SystemRelease(void* start, size_t length) {
-    return true;
   if (VirtualFree(start, length, MEM_DECOMMIT))
     return true;
 
