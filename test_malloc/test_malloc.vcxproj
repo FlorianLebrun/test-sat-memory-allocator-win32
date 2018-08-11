@@ -34,7 +34,7 @@
     <ProjectGuid>{B0B455D1-41B1-48CD-9F1F-3228905E231B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>test_malloc</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

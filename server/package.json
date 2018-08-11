@@ -77,7 +77,7 @@
   },
   "scripts": {
     "start": "babel-node src/index",
-    "debug": "nodemon --watch src --exec babel-node src --source-maps",
+    "debug": "nodemon --watch src --exec babel-node src/index --source-maps",
     "build": "babel src -d dist --source-maps"
   }
 }

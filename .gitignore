@@ -2,6 +2,7 @@ __saves__
 Debug
 x64
 .vs
+*.vspx
 *.suo
 *.sdf
 *.opensdf
