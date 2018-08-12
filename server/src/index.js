@@ -37,7 +37,7 @@ app.use("/inspector", function (req, res, next) {
 
 app.use("/", express.static("../web/build"))
 
-const server = app.listen(42000, function () {
+const server = app.listen(9944, function () {
   const port = server.address().port
   console.log("Process " + process.pid + " is listening on " + port)
 }).on("upgrade", function (req, socket, head) {

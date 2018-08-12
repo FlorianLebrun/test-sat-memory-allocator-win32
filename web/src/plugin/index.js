@@ -1,6 +1,7 @@
 import Application from "@application"
 
 import ProfilerWindow from "./ProfilerWindow"
+import MemoryWindow from "./MemoryWindow"
 import TerminalWindow from "./TerminalWindow"
 
 class ProfilerInspector {
@@ -16,7 +17,8 @@ class ProfilerInspector {
 class SatMemoryPlugin extends Application.PluginInstance {
   inspector: ProfilerInspector
   pluginDidMount() {
-    this.inspector = new ProfilerInspector("http://localhost:42000")
+    this.inspector = new ProfilerInspector("http://localhost:9944")
+    this.openWindow("memory")
     this.openWindow("profiler")
     this.openWindow("terminal")
   }
@@ -35,6 +37,15 @@ Application.installPlugin({
       defaultIcon: "globe",
       defaultDockId: "center",
       component: ProfilerWindow,
+      parameters: {
+        "inspector": true,
+      }
+    },
+    "memory": {
+      defaultTitle: "Memory",
+      defaultIcon: "globe",
+      defaultDockId: "center",
+      component: MemoryWindow,
       parameters: {
         "inspector": true,
       }
