@@ -12,6 +12,9 @@ class ProfilerInspector {
   fetchAPI(url, options) {
     return Application.fetchAPI(this.baseUrl + url, options)
   }
+  fetchData(value: Object): Promise<Object> {
+    return this.fetchAPI("/inspector/sat/memory/data", { body: value })
+  }
 }
 
 class SatMemoryPlugin extends Application.PluginInstance {
@@ -19,8 +22,8 @@ class SatMemoryPlugin extends Application.PluginInstance {
   pluginDidMount() {
     this.inspector = new ProfilerInspector("http://localhost:9944")
     this.openWindow("memory")
-    this.openWindow("profiler")
-    this.openWindow("terminal")
+    //this.openWindow("profiler")
+    //this.openWindow("terminal")
   }
   log = () => {
     console.log.apply(console, arguments)

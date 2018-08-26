@@ -28,7 +28,7 @@ class ObjectsView extends Component {
     if (!this.pending && (this.start !== start || this.end !== end || this.state.filter !== filter)) {
       this.start = start
       this.end = end
-      this.pending = inspector.fetchAPI("/inspector/sat/memory-objects", {
+      this.pending = inspector.fetchAPI("/inspector/sat/memory/query", {
         body: { start, end, filter }
       }).then((res) => {
         const data = res.json
@@ -61,7 +61,7 @@ class ObjectsView extends Component {
       {objects && objects.map((x, i) => {
         return (<DataFrame
           key={i}
-          name={x.at}
+          name={x.$ref}
           value={x}
           inspector={inspector}
         />)

@@ -1,6 +1,71 @@
 import React, { Component } from "react"
 import TreeNode from "@modules/TreeNode"
 
+class DataValue extends Component<void, Object, void> {
+  props: Object
+  data: Object
+
+  renderObject = () => {
+    const { value, inspector } = this.props
+    return value && Object.keys(value).map((name, i) => {
+      return <DataValue name={name} value={value[name]} inspector={inspector} />
+    })
+  }
+  renderData = () => {
+    const { value, inspector } = this.props
+
+    // Fetch content when needed
+    const { $ref } = value
+    if (!this.data) {
+      if (value.data) {
+        this.data = value.data
+      }
+      else {
+        return inspector.fetchData(value, {
+          body: { $ref }
+        }).then((res) => {
+          this.data = res.json.data || { $error: "Bad response" }
+          return this.data
+        }).catch((e) => {
+          this.data = { $error: e.message || e.status }
+          return this.data
+        })
+      }
+    }
+    else if (this.data instanceof Promise) {
+      return this.data
+    }
+
+    // Render content
+    const { data } = this
+    return data && Object.keys(data).map((name, i) => {
+      return <DataValue name={name} value={data[name]} inspector={inspector} />
+    })
+  }
+  render() {
+    const { name, value } = this.props
+    if (!(value instanceof Object)) {
+      return <TreeNode
+        header={<span><b className="text-magenta">{name}</b> = {JSON.stringify(value)}</span>}
+        content={null}
+      />
+    }
+    else if (value.$ref) {
+      return <TreeNode
+        header={<span><b className="text-magenta">{name}</b><i className="text-shade"> : {value.extends || "object"}</i></span>}
+        content={this.renderData}
+      />
+    }
+    else {
+      return <TreeNode
+        header={<span><b className="text-magenta">{name}</b><i className="text-shade"> : object</i></span>}
+        content={this.renderObject}
+      />
+    }
+  }
+}
+
+
 class DataFrame extends Component<void, Object, void> {
   props: Object
 
@@ -35,7 +100,7 @@ class DataFrame extends Component<void, Object, void> {
     let content
     if (value.type === "object") {
       content = data && Object.keys(data).map((name, i) => {
-        return <DataFrame name={name} value={data[name]} inspector={inspector} />
+        return <DataValue name={name} value={data[name]} inspector={inspector} />
       })
     }
     return <React.Fragment>
