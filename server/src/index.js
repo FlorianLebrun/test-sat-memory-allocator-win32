@@ -1,5 +1,6 @@
 import Path from "path"
 import express from "express"
+import cors from "cors"
 import { WebxEngine, WebsocketResponse } from "node-webengine-hosting"
 import { fs } from "node-webengine-hosting/dist/common";
 
@@ -26,7 +27,17 @@ const config = {
 
 const engine = new WebxEngine()
 engine.connect(config)
+
 const app = express()
+
+// put cors middleware
+app.use(cors({
+  origin: function (origin, callback) {
+    callback(null, true)
+  },
+  credentials: true,
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}))
 
 app.use("/inspector", function (req, res, next) {
   console.log(req.url)
