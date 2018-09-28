@@ -2,6 +2,7 @@ import Application from "@application"
 
 import ProfilerWindow from "./ProfilerWindow"
 import MemoryWindow from "./MemoryWindow"
+import StatsWindow from "./StatsWindow"
 import TerminalWindow from "./TerminalWindow"
 
 class ProfilerInspector {
@@ -23,6 +24,7 @@ class SatMemoryPlugin extends Application.PluginInstance {
     this.inspector = new ProfilerInspector("http://localhost:9944")
     //this.openWindow("memory")
     this.openWindow("profiler")
+    this.openWindow("stats")
     //this.openWindow("terminal")
   }
   log = () => {
@@ -35,6 +37,15 @@ Application.installPlugin({
   title: "Dev Console",
   component: SatMemoryPlugin,
   windows: {
+    "stats": {
+      defaultTitle: "Stats",
+      defaultIcon: "stats",
+      defaultDockId: "left",
+      component: StatsWindow,
+      parameters: {
+        "inspector": true,
+      }
+    },
     "profiler": {
       defaultTitle: "Profiler",
       defaultIcon: "globe",
