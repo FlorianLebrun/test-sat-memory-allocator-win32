@@ -29,51 +29,53 @@ class ProfilerWindow extends Application.WindowComponent {
     })
   }
   render() {
-    if (this.selectedView && this.globalView) {
-      const { inspector } = this.props
-      const { statistics } = this.sampler
-      return (<div className="flex-col" style={styles.body}>
-        <span className="btn btn-default flex-no" onClick={this.handleRefresh}>
-          {"Update"}
-        </span>
-        {statistics && <span className="text-shade">
-          <small className="padding-left-lg">rateLimit: {(statistics.samplingRateLimit / 1000) | 0} Khz</small>
-          <small className="padding-left-lg">memory: {(statistics.memoryUse / 1000) | 0} Kbytes</small>
-          <small className="padding-left-lg">samples: {statistics.samplingCycles}</small>
-        </span>}
-        <ProfileViewSelector selection={this.selectedView} range={this.globalView}>
-          <SamplesGraph title="cpu" label="cpu-use" view={this.globalView} sampler={this.sampler} options={options.cpu} style={styles.cpu} />
-          <SamplesGraph title="memory" label="memory-use" view={this.globalView} sampler={this.sampler} options={options.memory} style={styles.memory} />
-        </ProfileViewSelector>
-        <TreeNode
-          noMargin
-          header="Zoom"
-          content={<React.Fragment>
-            <SamplesGraph title="cpu" label="cpu-use" view={this.selectedView} sampler={this.sampler} options={options.cpu} style={styles.cpu} />
-          </React.Fragment>}
-        />
-        <TreeNode
-          header="Call Histogram"
-          content={<React.Fragment>
-            <StackHistogram view={this.selectedView} style={{ height: 500 }} inspector={inspector} />
-          </React.Fragment>}
-        />
-        <TreeNode
-          open
-          header="Objects"
-          content={<React.Fragment>
-            <ObjectsBrowser view={this.selectedView} inspector={inspector} />
-          </React.Fragment>}
-        />
-        {/* 
+    const { inspector } = this.props
+    const { statistics } = this.sampler
+    return (<div className="flex-col" style={styles.body}>
+      <span className="btn btn-default flex-no" onClick={this.handleRefresh}>
+        {"Update"}
+      </span>
+      {this.selectedView && this.globalView
+        ? <React.Fragment>
+          {statistics && <span className="text-shade">
+            <small className="padding-left-lg">rateLimit: {(statistics.samplingRateLimit / 1000) | 0} Khz</small>
+            <small className="padding-left-lg">memory: {(statistics.memoryUse / 1000) | 0} Kbytes</small>
+            <small className="padding-left-lg">samples: {statistics.samplingCycles}</small>
+          </span>}
+          <ProfileViewSelector selection={this.selectedView} range={this.globalView}>
+            <SamplesGraph title="cpu" label="cpu-use" view={this.globalView} sampler={this.sampler} options={options.cpu} style={styles.cpu} />
+            <SamplesGraph title="memory" label="memory-use" view={this.globalView} sampler={this.sampler} options={options.memory} style={styles.memory} />
+          </ProfileViewSelector>
+          <TreeNode
+            noMargin
+            header="Zoom"
+            content={<React.Fragment>
+              <SamplesGraph title="cpu" label="cpu-use" view={this.selectedView} sampler={this.sampler} options={options.cpu} style={styles.cpu} />
+            </React.Fragment>}
+          />
+          <TreeNode
+            header="Call Histogram"
+            content={<React.Fragment>
+              <StackHistogram view={this.selectedView} style={{ height: 500 }} inspector={inspector} />
+            </React.Fragment>}
+          />
+          <TreeNode
+            open
+            header="Objects"
+            content={<React.Fragment>
+              <ObjectsBrowser view={this.selectedView} inspector={inspector} />
+            </React.Fragment>}
+          />
+          {/* 
           <ChartSamples label="cpu" view={this.selectedView} sampler={sampler} key={"cpu-use"} options={options.cpu} style={styles.cpu} />
           <ObjectsView view={this.selectedView} className="flex-1" inspector={inspector} />
         */}
-      </div>)
-    }
-    else {
-      return (<div>Wait...</div>)
-    }
+        </React.Fragment>
+        : <div>
+          {"Wait..."}
+        </div>
+      }
+    </div>)
   }
 }
 
