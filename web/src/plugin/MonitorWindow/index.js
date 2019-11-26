@@ -13,7 +13,9 @@ export default class MonitorWindow extends Application.WindowComponent {
     const { inspector } = this.props
     inspector.eventSoure.addEventListener("/runtime/profile", (e) => {
       const { profiles } = this.state
-      this.setState({ profiles: [...profiles, JSON.parse(e.data)] })
+      const data = JSON.parse(e.data)
+      console.log("------ New Profile ------\n", data)
+      this.setState({ profiles: [...profiles, data] })
     })
   }
   render() {
