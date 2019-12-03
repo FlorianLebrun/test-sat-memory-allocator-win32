@@ -27,7 +27,7 @@ class SatMemoryPlugin extends Application.PluginInstance {
     this.inspector = new ProfilerInspector("http://localhost:9944/admin")
     //this.openWindow("memory")
     this.openWindow("monitor")
-    this.openWindow("stats")
+    //this.openWindow("stats")
     //this.openWindow("terminal")
   }
   log = () => {
