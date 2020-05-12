@@ -1,14 +1,14 @@
-import React, { Component } from "react"
+import React from "react"
 import { NestedFlameChart } from "../charts/chart-flame"
 import { ProfileViewListener } from "../ProfileView"
 
 
-class StackHistogramView extends Component {
-  props: Object
-  state: Object = {
+class StackHistogramView extends React.Component {
+  props: any
+  state = {
     histogram: null,
   }
-  viewClient: ProfileViewClient
+  viewClient: ProfileViewListener
   pending = null
   start = 0
   end = 0

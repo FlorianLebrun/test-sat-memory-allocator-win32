@@ -1,10 +1,10 @@
 import React from "react"
-import Application from "@application"
-import TreeNode from "@modules/TreeNode"
+import Application from "react-application-frame"
+import TreeNode from "../modules/TreeNode"
 import { NestedFlameChart } from "../modules/charts/chart-flame"
 
 export default class MonitorWindow extends Application.WindowComponent {
-  props: Object
+  props: any
   state = {
     profiles: []
   }
@@ -24,6 +24,7 @@ export default class MonitorWindow extends Application.WindowComponent {
       {profiles && profiles.map((profile, i) => {
         return <TreeNode
           key={i}
+          open
           header={`Profile Histogram: ${profile.title || i}`}
           content={<React.Fragment>
             <NestedFlameChart histogram={profile.histogram} style={{ height: 500 }} />

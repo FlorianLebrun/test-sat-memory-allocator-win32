@@ -1,16 +1,17 @@
 import chartStyles from "./chart-styles"
+import { ProfileViewClient } from "../ProfileView"
 
 export class ScalarIntervalGrapher {
   client: ProfileViewClient
-  style: Object
+  style: any
   suffix: string
 
-  constructor(client: ProfileViewClient, suffix: string, style: Object) {
+  constructor(client: ProfileViewClient, suffix?: string, style?: any) {
     this.client = client
     this.suffix = suffix
     this.style = style || chartStyles.intervalStyle
   }
-  draw(gl: CanvasRenderingContext2D) {
+  draw(gl: any) {
     const { style, client } = this
     const { interval } = client.view
 

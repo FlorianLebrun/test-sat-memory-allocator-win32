@@ -1,27 +1,28 @@
-import React, { Component } from 'react'
+import React from 'react'
 import GraphicLayout2D from "../charts/GraphicLayout2D"
 import { HtmlGrabReaction } from "../charts/event.utils"
 import { ProfileView, ProfileViewClient } from '../ProfileView'
 import { ScalarGridGrapher } from '../charts/chart-scalarGrid'
 import chartStyles from "../charts/chart-styles"
+import ProfileSampler, { SamplesBlock } from '../ProfileSampler'
 
-class SamplesGrapher {
+export class SamplesGrapher {
   client: ProfileViewClient
-  blocks: Array<SamplesBlock>
+  blocks: SamplesBlock[]
   label: string
   title: string
-  style: Object
+  style: any
 
   valueMax: number
   valueMin: number
 
-  constructor(client: ProfileViewClient, label: string, title: string, style: Object) {
+  constructor(client: ProfileViewClient, label: string, title: string, style?: any) {
     this.client = client
     this.label = label
     this.title = title
     this.style = style || chartStyles.curveStyle
   }
-  apply(blocks: Array<SamplesBlock>) {
+  apply(blocks: SamplesBlock[]) {
     this.blocks = blocks
     if (Array.isArray(blocks)) {
       const range = { valueMin: 0, valueMax: 0 }
@@ -80,31 +81,32 @@ class SamplesGrapher {
     gl.beginPath()
     gl.moveTo(0, valueOffset)
     gl.lineTo(size, valueOffset)
-    gl.stroke();
+    gl.stroke()
   }
 }
 
 type PropsType = {
-  label: string,
-  title: string,
-  view: ProfileView,
-  sampler: ProfileSampler,
-  style: string,
-  className: string,
+  label: string
+  title: string
+  view: ProfileView
+  sampler: ProfileSampler
+  style?: string
+  className?: string
+  options?: any
 }
 
-class ChartSamples extends Component<void, PropsType, void> {
+export default class ChartSamples extends React.Component {
   props: PropsType
   timeClient: ProfileViewClient
   chart: SamplesGrapher
   grid: ScalarGridGrapher
-  //samples: Array<SamplesBlock>
+  refs: any
 
   componentWillMount() {
     const { title, label, view, options } = this.props
     this.timeClient = new ProfileViewClient(view || new ProfileView(0, 1), this.update)
     this.timeClient.format = function (value) {
-      return value.toFixed(this.precision) + ' s';
+      return value.toFixed(this.precision) + ' s'
     }
     this.chart = new SamplesGrapher(this.timeClient, label, title)
     this.grid = new ScalarGridGrapher(this.timeClient, options)
@@ -128,7 +130,7 @@ class ChartSamples extends Component<void, PropsType, void> {
     e.preventDefault()
     e.stopPropagation()
   }
-  handleMouseDown = (e: SyntheticEvent) => {
+  handleMouseDown = (e) => {
     new HtmlGrabReaction(e.currentTarget, e, this.handleOffset)
   }
   resize = (w, h) => {
@@ -164,5 +166,3 @@ class ChartSamples extends Component<void, PropsType, void> {
     />)
   }
 }
-
-export default ChartSamples

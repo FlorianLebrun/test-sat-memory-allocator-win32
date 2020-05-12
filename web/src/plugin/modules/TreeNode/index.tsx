@@ -1,21 +1,22 @@
-import React, { Component } from "react"
+import React from "react"
 
 export type PropsType = {
   open?: boolean,
   noMargin?: boolean,
   largeOpen?: boolean | "full",
-  parameters: any,
-  header: any,
-  content: any | Function, // content: at Function.invoke(parameters) is Promise
+  parameters?: any,
+  header?: any,
+  content?: any | Function, // content: at Function.invoke(parameters) is Promise
 }
 
 export type StateType = {
   open: boolean,
 }
 
-export default class TreeNode extends Component<void, PropsType, void> {
+export default class TreeNode extends React.Component {
   props: PropsType
   state: StateType
+
   componentWillMount() {
     this.setState({ open: this.props.open ? true : false })
   }
@@ -48,18 +49,18 @@ export default class TreeNode extends Component<void, PropsType, void> {
         isLoading = true
       }
       else if (content) {
-        icon = hasIcon && (<span className="fa fa-fw fa-caret-down cursor-pointer" onClick={ this.handleOpen } />)
+        icon = hasIcon && (<span className="fa fa-fw fa-caret-down cursor-pointer" onClick={this.handleOpen} />)
       }
       else {
-        icon = hasIcon && (<span className="fa fa-fw fa-circle-o" style={ styles.tiny } />)
+        icon = hasIcon && (<span className="fa fa-fw fa-circle-o" style={styles.tiny} />)
       }
     }
     else if (content) {
-      icon = hasIcon && (<span className="fa fa-fw fa-caret-right cursor-pointer" onClick={ this.handleOpen } />)
+      icon = hasIcon && (<span className="fa fa-fw fa-caret-right cursor-pointer" onClick={this.handleOpen} />)
       content = null
     }
     else {
-      icon = hasIcon && (<span className="fa fa-fw fa-circle-o" style={ styles.tiny } />)
+      icon = hasIcon && (<span className="fa fa-fw fa-circle-o" style={styles.tiny} />)
     }
 
     // Render header
@@ -68,7 +69,7 @@ export default class TreeNode extends Component<void, PropsType, void> {
       header = header(status, parameters, this.handleOpen)
     }
     if (largeOpen) {
-      header = (<div className="flex-1 cursor-pointer" onClick={ this.handleOpen }>{header}</div>)
+      header = (<div className="flex-1 cursor-pointer" onClick={this.handleOpen}>{header}</div>)
     }
     else {
       header = (<div className="flex-1">{header}</div>)
@@ -80,7 +81,7 @@ export default class TreeNode extends Component<void, PropsType, void> {
           <span className="flex-no">{icon}</span>
           {header}
         </div>
-        {content && (<div className={ !noMargin ? "margin-left-lg" : undefined }>{content}</div>)}
+        {content && (<div className={!noMargin ? "margin-left-lg" : undefined}>{content}</div>)}
       </div>
     )
   }

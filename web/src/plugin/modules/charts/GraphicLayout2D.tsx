@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React from "react"
 
-
-export default class GraphicLayout2D extends Component<void, Object, void> {
-  props: Object
-  timeout: number = -1
+export default class GraphicLayout2D extends React.Component {
+  props: any
+  timeout: any = -1
   width: number = 0
   height: number = 0
+  refs: { canvas: HTMLCanvasElement }
 
   componentDidMount() {
     this.update()
@@ -44,7 +44,7 @@ export default class GraphicLayout2D extends Component<void, Object, void> {
       }
       else {
         const { onDraw } = this.props
-        const gl = canvas.getContext('2d')
+        const gl = canvas.getContext('2d') as any
         gl.width = clientWidth
         gl.height = clientHeight
         gl.imageSmoothingEnabled = smooth
@@ -61,7 +61,7 @@ export default class GraphicLayout2D extends Component<void, Object, void> {
   render() {
     const { onResize, onDraw, style, frame, ...others } = this.props
     return (<div style={{ ...style, position: "relative" }} {...others}>
-      <canvas ref="canvas" style={layerStyle} />
+      <canvas ref="canvas" style={layerStyle as any} />
     </div>)
   }
 }

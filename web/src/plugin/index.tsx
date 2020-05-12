@@ -1,10 +1,9 @@
-import Application from "@application"
+import Application from "react-application-frame"
 
 import ProfilerWindow from "./ProfilerWindow"
 import MonitorWindow from "./MonitorWindow"
 import MemoryWindow from "./MemoryWindow"
 import StatsWindow from "./StatsWindow"
-import TerminalWindow from "./TerminalWindow"
 
 class ProfilerInspector {
   baseUrl: string
@@ -30,8 +29,8 @@ class SatMemoryPlugin extends Application.PluginInstance {
     //this.openWindow("stats")
     //this.openWindow("terminal")
   }
-  log = () => {
-    console.log.apply(console, arguments)
+  log = (...args) => {
+    console.log.apply(console, args)
   }
 }
 
@@ -72,15 +71,6 @@ Application.installPlugin({
       defaultIcon: "globe",
       defaultDockId: "center",
       component: MemoryWindow,
-      parameters: {
-        "inspector": true,
-      }
-    },
-    "terminal": {
-      defaultTitle: "Terminal",
-      defaultIcon: "terminal",
-      defaultDockId: "bottom",
-      component: TerminalWindow,
       parameters: {
         "inspector": true,
       }

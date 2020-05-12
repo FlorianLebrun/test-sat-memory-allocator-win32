@@ -1,16 +1,17 @@
 import chartStyles from "./chart-styles"
+import { ProfileViewClient } from "../ProfileView"
 
 export class ScalarGridGrapher {
   client: ProfileViewClient
   showHead: boolean
-  style: Object
+  style: any
 
-  constructor(client: ProfileViewClient, options: Object) {
+  constructor(client: ProfileViewClient, options: any) {
     this.client = client
     this.showHead = (options && options.showHead) || false
     this.style = (options && options.style) || chartStyles.gridStyle
   }
-  draw(gl: CanvasRenderingContext2D) {
+  draw(gl: any) {
     const { style, client } = this
     const { start, end } = client.view
     const { step } = client

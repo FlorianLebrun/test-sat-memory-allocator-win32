@@ -7,9 +7,9 @@ import chartStyles from "./chart-styles"
 
 class CurveGrapher {
   client: ProfileViewClient
-  data: Array<Object>
+  data: any[]
   label: string
-  style: Object
+  style: any
 
   startIndex: number
   endIndex: number
@@ -17,7 +17,10 @@ class CurveGrapher {
   valueMax: number
   valueMin: number
 
-  constructor(client: ProfileViewClient, label: string, data: Array<Object>, style: Object) {
+  values: number[]
+  times: number[]
+
+  constructor(client: ProfileViewClient, label: string, data: any, style?: any) {
     this.client = client
     this.label = label
     this.style = style || chartStyles.curveStyle
@@ -89,31 +92,33 @@ class CurveGrapher {
       gl.beginPath()
       gl.moveTo(0, valueOffset)
       gl.lineTo(size, valueOffset)
-      gl.stroke();
+      gl.stroke()
     }
   }
 }
 
 type PropsType = {
-  label: string,
-  view: ProfileView,
-  times: Array<number>,
-  values: Array<number>,
-  style: string,
-  className: string,
+  label: string
+  view: ProfileView
+  times: number[]
+  values: number[]
+  options: any
+  style: string
+  className: string
 }
 
-class ChartCurve extends Component<void, PropsType, void> {
+class ChartCurve extends React.Component {
   props: PropsType
   timeClient: ProfileViewClient
   chart: CurveGrapher
   grid: ScalarGridGrapher
+  refs: any
 
   componentWillMount() {
     const { label, view, times, values, options } = this.props
     this.timeClient = new ProfileViewClient(view || new ProfileView(0, 1), this.update)
     this.timeClient.format = function (value) {
-      return value.toFixed(this.precision) + ' s';
+      return value.toFixed(this.precision) + ' s'
     }
     this.chart = new CurveGrapher(this.timeClient, label, { times, values })
     this.grid = new ScalarGridGrapher(this.timeClient, options)
@@ -139,7 +144,7 @@ class ChartCurve extends Component<void, PropsType, void> {
     e.preventDefault()
     e.stopPropagation()
   }
-  handleMouseDown = (e: SyntheticEvent) => {
+  handleMouseDown = (e) => {
     new HtmlGrabReaction(e.currentTarget, e, this.handleOffset)
   }
   resize = (w, h) => {

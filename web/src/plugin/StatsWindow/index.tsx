@@ -1,10 +1,10 @@
 import React from "react"
-import Application from "@application"
+import Application from "react-application-frame"
 
 class StatsWindow extends Application.WindowComponent {
-  props: Object
-  state = { threads: null }
-  pending: Promise
+  props: any
+  state = { threads: null, heaps: null }
+  pending: Promise<any>
 
   componentWillMount() {
     this.update()
@@ -19,7 +19,7 @@ class StatsWindow extends Application.WindowComponent {
       this.pending = null
     })
   }
-  handleThreadSwitch = (thread: Object) => () => {
+  handleThreadSwitch = (thread: any) => () => {
     const { inspector } = this.props
     inspector.fetchAPI("/inspector/sat/thread", { body: { id: thread.id, watch: !thread.sampled } }).then((res) => {
       this.update()
@@ -27,7 +27,7 @@ class StatsWindow extends Application.WindowComponent {
     })
   }
   handleUpdate = (pageIndex) => {
-    this.update(pageIndex)
+    this.update()
   }
   render() {
     const { threads, heaps } = this.state

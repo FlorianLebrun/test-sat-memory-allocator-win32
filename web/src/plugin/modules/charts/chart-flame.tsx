@@ -7,10 +7,10 @@ import chartStyles from "./chart-styles"
 
 class NestedFlameGrapher {
   client: ProfileViewClient
-  style: Object
-  data: Array<Object>
+  style: any
+  data: { [key: string]: any[] }
 
-  constructor(client: ProfileViewClient, data: Array<Object>, style: Object) {
+  constructor(client: ProfileViewClient, data: any[], style?: any) {
     this.client = client
     this.style = style || chartStyles.flameStyle
     this.apply(data)
@@ -83,15 +83,16 @@ class NestedFlameGrapher {
 }
 
 export class NestedFlameChart extends Component {
-  props: Object
+  props: any
   rateClient: ProfileViewClient
   chart: NestedFlameGrapher
-  grid: ScalarGridGrapher
+  grid: ScalarIntervalGrapher
+  refs: any
 
   componentWillMount() {
     this.rateClient = new ProfileViewClient(new ProfileView(0, 1), this.update)
     this.rateClient.format = function (value) {
-      return (value * 100).toFixed(Math.max(0, this.precision - 2)) + ' %';
+      return (value * 100).toFixed(Math.max(0, this.precision - 2)) + ' %'
     }
     this.chart = new NestedFlameGrapher(this.rateClient, this.props.histogram)
     this.grid = new ScalarIntervalGrapher(this.rateClient)
@@ -106,7 +107,7 @@ export class NestedFlameChart extends Component {
   componentWillUnmount() {
     this.rateClient.unmap()
   }
-  handleMouseDown = (e: SyntheticEvent) => {
+  handleMouseDown = (e) => {
     new HtmlGrabReaction(e.currentTarget, e, this.handleOffset)
   }
   handleOffset = (e: HtmlGrabReaction) => {

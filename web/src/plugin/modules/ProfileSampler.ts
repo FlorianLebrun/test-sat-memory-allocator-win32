@@ -1,19 +1,20 @@
 import { ProfileView } from './ProfileView'
+import { Inspector } from './Inspector'
 
-type SamplesLoader = (blocks: Array<{ index: number, level: number }>) => Promise<Object>
+export type SamplesLoader = (blocks: Array<{ index: number, level: number }>) => Promise<Object>
 
-type RangeType = {
-  valueMin: number,
+export type RangeType = {
+  valueMin: number
   valueMax: number
 }
 
-class SamplesBlock {
-  loading: integer = 0
-  index: integer
-  level: integer
-  samples: Object
+export class SamplesBlock {
+  loading: number = 0
+  index: number
+  level: number
+  samples: any
 
-  constructor(index: integer, level: integer) {
+  constructor(index: number, level: number) {
     this.index = index
     this.level = level
   }
@@ -39,27 +40,27 @@ class SamplesBlock {
   }
 }
 
-class ProfileSampler {
-  inspector: SamplesLoader
+export default class ProfileSampler {
+  inspector: Inspector
   view: ProfileView
-  loading: Promise
-  statistics: Object
+  loading: Promise<any>
+  statistics: any
 
-  blockLength: integer
-  blockLevels: Array<Array<SamplesBlock>>
+  blockLength: number
+  blockLevels: SamplesBlock[][]
 
-  constructor(inspector: SamplesLoader, blockLength: integer) {
+  constructor(inspector: Inspector, blockLength: number) {
     this.inspector = inspector
     this.blockLength = blockLength
     this.blockLevels = new Array(0)
   }
-  loadBlocks(blocks: Array<SamplesBlock>) {
+  loadBlocks(blocks: SamplesBlock[]) {
     let promise = this.inspector.fetchAPI("/inspector/sat/tick-sampling", {
       body: {
         blocks: blocks.map(b => b.location()),
         length: this.blockLength,
       }
-    }).then((res: Array<Object>) => {
+    }).then((res) => {
       const samples = res.json
       samples.map((data, i) => blocks[i].load(data))
       return this
@@ -68,7 +69,7 @@ class ProfileSampler {
     else this.loading = Promise.all([this.loading, promise])
     return this.loading
   }
-  getBlockSpan(indexMin: integer, indexMax: integer, level: integer): Array<SamplesBlock> {
+  getBlockSpan(indexMin: number, indexMax: number, level: number): Promise<SamplesBlock[]> {
     const blocks = []
     let blockLoading = null
     let hasLoading = false
@@ -108,7 +109,7 @@ class ProfileSampler {
       body: {
         length: 0,
       }
-    }).then((res: Array<Object>) => {
+    }).then((res) => {
       const data = res.json
       if (data.stats) {
         this.statistics = data.stats
@@ -123,7 +124,7 @@ class ProfileSampler {
       return this.view
     })
   }
-  getRangeSamples(start: number, end: number, size: integer): Array<SamplesBlock> {
+  getRangeSamples(start: number, end: number, size: number): Promise<SamplesBlock[]> {
     const interval = end - start // Time interval in second
     const rate = size / (interval * this.blockLength) // Blocks rate in blocks per second
     const level = Math.ceil(Math.log2(rate))
@@ -132,5 +133,3 @@ class ProfileSampler {
     return this.getBlockSpan(indexMin, indexMax, level)
   }
 }
-
-export default ProfileSampler

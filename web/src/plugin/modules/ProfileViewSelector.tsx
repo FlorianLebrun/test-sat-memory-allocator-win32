@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import { ProfileView, ProfileViewLink } from "./ProfileView"
 import { HtmlGrabReaction } from "./charts/event.utils"
 
@@ -8,23 +8,24 @@ type PropsType = {
   children: any,
 }
 
-class ProfileViewSelector extends Component<void, PropsType, Object> {
-  props: Object
+export default class ProfileViewSelector extends React.Component {
+  props: any
   state = {
     min: 0,
     max: 1,
   }
-  viewClient: ProfileViewClient
+  viewClient: ProfileViewLink
+  drag: HtmlGrabReaction
 
   componentWillMount() {
     const { selection } = this.props
-    this.viewClient = new ProfileViewLink(selection, this.updateRange)
+    this.viewClient = new ProfileViewLink(selection)
     this.viewClient.update = this.updateRange
   }
   componentWillUnmount() {
     this.viewClient.unmap()
   }
-  handleMouseDown = (e: SyntheticEvent) => {
+  handleMouseDown = (e) => {
     this.drag = new HtmlGrabReaction(e.currentTarget, e, this.handleOffset, this.handleRelease)
   }
   handleOffset = (e: HtmlGrabReaction) => {
@@ -94,4 +95,3 @@ class ProfileViewSelector extends Component<void, PropsType, Object> {
   }
 }
 
-export default ProfileViewSelector

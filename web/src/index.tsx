@@ -1,16 +1,15 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import Application, { Addons } from "react-application-frame"
+import Application from "react-application-frame"
+import FetchAddon from "react-application-frame/addons/fetch"
+import PopupAddon from "react-application-frame/addons/popup"
+import NotificationAddon from "react-application-frame/addons/notification"
+import WindowsFrameAddon from "react-application-frame/addons/windows-frame"
 import "./index.css"
 
-import "bootstrap/dist/css/bootstrap.min.css"
-window.jQuery = require("jquery/dist/jquery.min.js")
-require("bootstrap/dist/js/bootstrap.min.js")
-
-Application.installPlugin(Addons.WindowsFrame)
-Application.installPlugin(Addons.Notification)
-Application.installPlugin(Addons.Popup)
-Application.installPlugin(Addons.Fetch, {
+Application.installPlugin(NotificationAddon)
+Application.installPlugin(PopupAddon)
+Application.installPlugin(FetchAddon, {
   endpoints: [
     {
       pattern: /^.*/,
@@ -21,9 +20,7 @@ Application.installPlugin(Addons.Fetch, {
     },
   ],
 })
-require("./plugin")
-
-Application.configureLayout({
+Application.installPlugin(WindowsFrameAddon, {
   displayLayout: {
     "#": {
       type: "#",
@@ -51,6 +48,6 @@ Application.configureLayout({
   },
 })
 
-ReactDOM.render((<div style={{ margin: 0, padding: 0, width: "100vw", height: "100vh" }}>
-  {Application.renderDisplayFrame()}
-</div>), document.getElementById("root"))
+require("./plugin")
+
+ReactDOM.render(Application.layout.frame.renderFrameComponent(), document.getElementById("root"))

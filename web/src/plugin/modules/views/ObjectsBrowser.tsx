@@ -1,15 +1,18 @@
-import React, { Component } from "react"
+import React from "react"
 import { ProfileViewListener } from "../ProfileView"
 import DataFrame from "../DataFrame"
 
-class ObjectsView extends Component {
-  props: Object
-  state: Object = {
+class ObjectsView extends React.Component {
+  props: any
+  state = {
     objects: null,
     typeFilter: undefined,
+    filter: undefined,
   }
-  viewClient: ProfileViewClient
+  viewClient: ProfileViewListener
   typeFilter: string
+  pending: any
+  filter: string
   start = 0
   end = 0
 
@@ -42,8 +45,8 @@ class ObjectsView extends Component {
       this.setState({ objects: null })
     }
   }
-  handleFilter = (value: string) => {
-    this.filter = value || undefined
+  handleFilter = (e) => {
+    this.filter = e.value || undefined
   }
   applyFilter = () => {
     this.updateRange()

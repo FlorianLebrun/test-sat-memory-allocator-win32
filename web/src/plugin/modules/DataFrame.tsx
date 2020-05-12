@@ -1,9 +1,9 @@
-import React, { Component } from "react"
-import TreeNode from "@modules/TreeNode"
+import React from "react"
+import TreeNode from "./TreeNode"
 
-class DataValue extends Component<void, Object, void> {
-  props: Object
-  data: Object
+class DataValue extends React.Component {
+  props: any
+  data: any
 
   renderObject = () => {
     const { value, inspector } = this.props
@@ -66,8 +66,8 @@ class DataValue extends Component<void, Object, void> {
 }
 
 
-class DataFrame extends Component<void, Object, void> {
-  props: Object
+class DataFrame extends React.Component {
+  props: any
 
   renderHeader() {
     const { value, name } = this.props
@@ -114,7 +114,7 @@ class DataFrame extends Component<void, Object, void> {
     </React.Fragment>
   }
   render() {
-    return React.createElement(TreeNode, this.renderHeader())
+    return React.createElement(TreeNode, this.renderHeader() as any)
   }
 }
 

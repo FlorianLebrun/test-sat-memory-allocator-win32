@@ -1,9 +1,20 @@
-import React, { Component } from "react"
-import Application from "@application"
+import React from "react"
+import Application from "react-application-frame"
 import DataFrame from "../modules/DataFrame"
+import { Inspector } from "../modules/Inspector"
 
-class Pagination extends Component {
-  props: Object
+type PropsType = {
+  inspector: Inspector
+  pageIndex: number
+  pageCount: number
+  width: number
+  className?: string
+  style?: any
+  onChange?: Function
+}
+
+class Pagination extends React.Component {
+  props: PropsType
   handleNext = () => {
     const { pageIndex, pageCount, onChange } = this.props
     onChange && onChange(Math.min(pageCount - 1, pageIndex + 1))
@@ -59,9 +70,9 @@ class Pagination extends Component {
 const objectsPerPage = 32
 
 class MemoryWindow extends Application.WindowComponent {
-  props: Object
-  state = { pageIndex: 0, pageCount: 0 }
-  pending: Promise
+  props: PropsType
+  state: any = { pageIndex: 0, pageCount: 0 }
+  pending: Promise<any>
 
   componentWillMount() {
     this.update(0)
@@ -102,6 +113,7 @@ class MemoryWindow extends Application.WindowComponent {
         <small className="text-shade padding-left">{`${(usedSize / 1000) | 0} / ${(heapUsedSize / 1000) | 0} Kbytes`}</small>
       </div>
       <Pagination
+        inspector={inspector}
         pageIndex={pageIndex}
         pageCount={pageCount}
         width={8}

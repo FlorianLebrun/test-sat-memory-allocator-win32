@@ -37,7 +37,6 @@ export class ProfileViewListener extends ProfileViewLink {
 export class ProfileViewClient extends ProfileViewLink {
   step: number
   precision: number
-  format: Function
 
   offset: number
   scale: number
@@ -45,7 +44,7 @@ export class ProfileViewClient extends ProfileViewLink {
 
   draw: Function
 
-  constructor(view: ProfileView, draw: Function, size: number) {
+  constructor(view: ProfileView, draw: Function, size?: number) {
     super(view)
     this.draw = draw
     this.size = size || 1
@@ -80,12 +79,12 @@ export class ProfileViewClient extends ProfileViewLink {
     this.offset = start * this.scale
 
     // Update value display properties
-    const base = interval * minStrideWidth / this.size;
-    const decade = Math.ceil(Math.log(base) / Math.LN10);
-    const pixelsDensity = this.size / interval;
-    let step = Math.pow(10, decade);
-    if (step * pixelsDensity >= 5 * minStrideWidth) step /= 5;
-    if (step * pixelsDensity >= 2 * minStrideWidth) step /= 2;
+    const base = interval * minStrideWidth / this.size
+    const decade = Math.ceil(Math.log(base) / Math.LN10)
+    const pixelsDensity = this.size / interval
+    let step = Math.pow(10, decade)
+    if (step * pixelsDensity >= 5 * minStrideWidth) step /= 5
+    if (step * pixelsDensity >= 2 * minStrideWidth) step /= 2
     this.step = step
     this.precision = Math.max(0, -Math.floor(Math.log(step * 1.01) / Math.LN10))
 
@@ -93,8 +92,8 @@ export class ProfileViewClient extends ProfileViewLink {
     if (this.draw) this.draw()
     else console.warn("A scalar client should have a draw.")
   }
-  format(value: number) {
-    return value.toFixed(this.precision);
+  format = (value: number) => {
+    return value.toFixed(this.precision)
   }
 }
 
@@ -104,7 +103,7 @@ export class ProfileView {
   min: number
   max: number
   interval: number
-  clients: ProfileViewClient
+  clients: ProfileViewLink[]
   onChange: Function
 
   constructor(min: number = 0, max: number = 1) {
@@ -124,10 +123,10 @@ export class ProfileView {
       c.update()
     }
   }
-  map(client: ProfileViewClient) {
+  map(client: ProfileViewLink) {
     this.clients.push(client)
   }
-  unmap(client: ProfileViewClient) {
+  unmap(client: ProfileViewLink) {
     const index = this.clients.indexOf(client)
     if (index >= 0) this.clients.splice(index, 1)
   }

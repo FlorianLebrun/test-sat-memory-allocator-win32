@@ -23,3 +23,5 @@
 
 .font-style-italic {font-style: italic;}
 .font-style-bold {font-weight: bold;}
+
+body {margin:0}

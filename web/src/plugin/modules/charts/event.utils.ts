@@ -1,3 +1,9 @@
+export type Rect = {
+  bottom: number
+  left: number
+  right: number
+  top: number
+}
 
 export function stopEvent(e) {
   if (e.stopPropagation) e.stopPropagation()
@@ -11,7 +17,14 @@ export function stopPropagation(e) {
 }
 
 export class HtmlScrollingReaction {
-  constructor(element, event, onMouseScroll) {
+  element: HTMLElement
+  mouseX: number
+  mouseY: number
+  scrollX: number
+  scrollY: number
+  onMouseScroll: Function
+
+  constructor(element: HTMLElement, event, onMouseScroll: Function) {
     stopEvent(event)
     this.element = element
     this.mouseX = event.screenX
@@ -40,7 +53,19 @@ export class HtmlScrollingReaction {
 }
 
 export class HtmlGrabReaction {
-  constructor(element, event, onMouseGrab, onMouseRelease) {
+  element: HTMLElement
+  mouseX: number
+  mouseY: number
+  fromX: number
+  fromY: number
+  deltaX: number
+  deltaY: number
+  left: number
+  top: number
+  onMouseGrab: Function
+  onMouseRelease: Function
+
+  constructor(element: HTMLElement, event: MouseEvent, onMouseGrab: Function, onMouseRelease?: Function) {
     this.element = element
     this.mouseX = this.fromX = event.clientX
     this.mouseY = this.fromY = event.clientY
@@ -54,7 +79,7 @@ export class HtmlGrabReaction {
     this.element.style.left = this.left + "px"
     this.element.style.top = this.top + "px"
   }
-  selection(): DOMRect {
+  selection(): Rect {
     const r = this.element.getBoundingClientRect()
     return {
       left: (this.fromX < this.mouseX ? this.fromX : this.mouseX) - r.left,
@@ -81,13 +106,20 @@ export class HtmlGrabReaction {
 }
 
 export class SVGGrabReaction {
-  constructor(element, event, onMouseGrab) {
+  element: any
+  mouseX: number
+  mouseY: number
+  x: number
+  y: number
+  onMouseGrab: Function
+
+  constructor(element: HTMLElement, event: MouseEvent, onMouseGrab: Function) {
     stopEvent(event)
     this.element = element
     this.mouseX = event.screenX
     this.mouseY = event.screenY
-    this.x = element.x()
-    this.y = element.y()
+    this.x = this.element.x()
+    this.y = this.element.y()
     this.onMouseGrab = onMouseGrab
     setCurrentGrabReaction(this)
   }

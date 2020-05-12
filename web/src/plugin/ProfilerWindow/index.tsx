@@ -1,6 +1,6 @@
 import React from "react"
-import Application from "@application"
-import TreeNode from "@modules/TreeNode"
+import Application from "react-application-frame"
+import TreeNode from "../modules/TreeNode"
 import ProfileSampler from "../modules/ProfileSampler"
 import { ProfileView } from '../modules/ProfileView'
 
@@ -10,7 +10,7 @@ import StackHistogram from "../modules/views/StackHistogram"
 import ObjectsBrowser from "../modules/views/ObjectsBrowser"
 
 class ProfilerWindow extends Application.WindowComponent {
-  props: Object
+  props: any
   globalView: ProfileView = null
   selectedView: ProfileView = null
   sampler: ProfileSampler = null
@@ -90,7 +90,7 @@ const options = {
   }
 }
 
-const styles = {
+const styles: any = {
   cpu: {
     height: 50,
   },
